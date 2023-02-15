@@ -4,22 +4,35 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.example.pet.databinding.NewTaskSheetLayoutBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
-class NewTaskSheet: BottomSheetDialogFragment() {
+class NewTaskSheet : BottomSheetDialogFragment() {
     private lateinit var binding: NewTaskSheetLayoutBinding
 
-            override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    private val taskvm by sharedViewModel<TaskViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = NewTaskSheetLayoutBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.subbmitBtn.setOnClickListener {
+            if (!binding.name.text.isNullOrEmpty()) {
+                binding.name.text?.let {
+                    taskvm.addTaskItem(it.toString())
+                }
+            } else {
+//                Toast.makeText().show()
+            }
+        }
     }
 }

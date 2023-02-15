@@ -1,30 +1,29 @@
 package com.example.pet.dogFragments
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.launch
 import java.time.LocalTime
 import java.util.*
 
 class TaskViewModel: ViewModel() {
 
-    var taskItems = MutableLiveData<MutableList<TaskItem>>()
+    private val _tasksFlow = MutableSharedFlow<List<TaskItem>>()
+    val tasksFlow: SharedFlow<List<TaskItem>> = _tasksFlow
 
-    init {
-        taskItems.value = mutableListOf()
+    private val cache = mutableListOf<TaskItem>()
+
+    fun addTaskItem(taskText: String){
+        val newTask = TaskItem(
+            taskText,
+            System.currentTimeMillis(),
+            UUID.randomUUID().toString()
+        )
+        cache.add(newTask)
+        viewModelScope.launch {
+            _tasksFlow.emit(cache)
+        }
     }
-
-    fun addTaskItem(newTask: TaskItem){
-        val list = taskItems.value
-        list!!.add(newTask)
-        taskItems.postValue(list!!)
-    }
-
-    fun updateTaskItem(id: UUID, name: String, dueTime: LocalTime?){
-        val list = taskItems.value
-        val task = list!!.find { it.id == id }
-        task!!.name = name
-        task!!.dueTime = dueTime
-        taskItems.postValue(list!!)
-    }
-
 }
