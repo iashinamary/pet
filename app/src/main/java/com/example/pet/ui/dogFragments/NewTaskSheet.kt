@@ -1,4 +1,4 @@
-package com.example.pet.dogFragments
+package com.example.pet.ui.dogFragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -28,6 +28,7 @@ class NewTaskSheet : BottomSheetDialogFragment() {
             if (!binding.name.text.isNullOrEmpty()) {
                 binding.name.text?.let {
                     taskvm.addTaskItem(it.toString())
+                    dismiss()
                 }
             } else {
 //                Toast.makeText().show()

@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.pet.HomeFragment"
+        android:name="com.example.pet.ui.HomeFragment"
         android:label="HomeFragment" >
         <action
             android:id="@+id/action_homeFragment_to_toDoListFragment"
@@ -14,6 +14,14 @@
     </fragment>
     <fragment
         android:id="@+id/toDoListFragment"
-        android:name="com.example.pet.dogFragments.ToDoListFragment"
-        android:label="ToDoListFragment" />
+        android:name="com.example.pet.ui.dogFragments.ToDoListFragment"
+        android:label="ToDoListFragment" >
+        <action
+            android:id="@+id/action_toDoListFragment_to_newTaskSheet"
+            app:destination="@id/newTaskSheet" />
+    </fragment>
+    <dialog
+        android:id="@+id/newTaskSheet"
+        android:name="com.example.pet.ui.dogFragments.NewTaskSheet"
+        android:label="NewTaskSheet" />
 </navigation>
