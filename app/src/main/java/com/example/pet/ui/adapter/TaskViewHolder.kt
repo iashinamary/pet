@@ -11,5 +11,7 @@ class TaskViewHolder(private val binding: TaskItemLayoutBinding): RecyclerView.V
         binding.taskName.text = taskItem.name
 
         binding.dueTime.text = taskItem.creationTime
+
+        binding.completeButton.isChecked = taskItem.completed
     }
 }

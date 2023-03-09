@@ -11,7 +11,7 @@
         android:id="@+id/new_task"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="New task"
+        android:text="Новая задание"
         android:textSize="30sp"
         android:textStyle="bold"
         android:layout_margin="20dp"/>
@@ -27,7 +27,7 @@
             android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="Task" />
+            android:hint="задание" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -37,9 +37,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginHorizontal="20dp"
-        android:text="Save"/>
+        android:text="Сохранить"/>
 
-    <DatePicker
+    <TimePicker
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />

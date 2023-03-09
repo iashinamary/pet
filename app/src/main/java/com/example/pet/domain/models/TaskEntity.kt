@@ -10,6 +10,7 @@ import java.util.*
 @Entity(tableName = "tasks")
 data class TaskEntity(
     val name: String,
+    val completed: Boolean,
     @ColumnInfo(name = "time_stamp")
     val timeStamp: Long,
     @PrimaryKey
@@ -18,9 +19,9 @@ data class TaskEntity(
 
     fun toItem(): TaskItem {
         val date = SimpleDateFormat(
-            "hh:mm  dd.MM.yyyy", Locale.getDefault()
+            "hh:mm", Locale.getDefault()
         ).format(Date(timeStamp))
-        return TaskItem(name, date, id)
+        return TaskItem(name, completed, date, id)
     }
 
 }

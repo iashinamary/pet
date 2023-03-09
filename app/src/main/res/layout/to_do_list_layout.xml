@@ -13,7 +13,7 @@
     <androidx.appcompat.widget.AppCompatButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New task"
+        android:text="Новое задание"
         android:id="@+id/new_task_button"
         android:backgroundTint="@color/teal_700"
         android:textColor="@color/white"

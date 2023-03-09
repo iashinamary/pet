@@ -25,6 +25,7 @@ class TasksAdapter(): RecyclerView.Adapter<TaskViewHolder>() {
         holder.bindTaskItem(item)
         holder.itemView.setOnClickListener {
             interactor?.onClick(item)
+
         }
         holder.itemView.setOnLongClickListener {
             interactor?.onLongClick(item, holder.itemView)
@@ -46,5 +47,6 @@ class TasksAdapter(): RecyclerView.Adapter<TaskViewHolder>() {
     fun bindActions(interactor: RecyclerItemsInteractor<TaskItem>){
         this.interactor = interactor
     }
+
 
 }

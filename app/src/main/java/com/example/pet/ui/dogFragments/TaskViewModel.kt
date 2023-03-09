@@ -24,6 +24,7 @@ class TaskViewModel(
         viewModelScope.launch {
             val newTask = TaskEntity(
                 taskText,
+                false,
                 System.currentTimeMillis(),
                 UUID.randomUUID().toString()
             )
