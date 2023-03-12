@@ -1,5 +1,6 @@
 package com.example.pet.ui.dogFragments
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,8 @@ import android.widget.Toast
 import com.example.pet.databinding.NewTaskSheetLayoutBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import java.util.*
+import java.util.concurrent.TimeUnit
 
 class NewTaskSheet : BottomSheetDialogFragment() {
     private lateinit var binding: NewTaskSheetLayoutBinding
@@ -25,10 +28,18 @@ class NewTaskSheet : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.timePick.setIs24HourView(true)
+        binding.datapicker.minDate = System.currentTimeMillis()
         binding.subbmitBtn.setOnClickListener {
-            if (!binding.name.text.isNullOrEmpty()) {
+            val datePicker = binding.datapicker
+            val timePickerCompact = binding.timePick
+            val customCalendar = Calendar.getInstance()
+            customCalendar.set(datePicker.year, datePicker.month, datePicker.dayOfMonth, timePickerCompact.hour, timePickerCompact.minu te)
+            val customTime = customCalendar.timeInMillis
+            if (!binding.name.text.isNullOrEmpty() && System.currentTimeMillis() < customTime) {
                 binding.name.text?.let {
-                    taskvm.addTaskItem(it.toString())
+
+                    taskvm.addTaskItem(it.toString(), customTime)
                     dismiss()
                 }
             } else {

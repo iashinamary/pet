@@ -9,5 +9,6 @@ class TaskRepo(
     suspend fun addTask(entity: TaskEntity) = dao.insertTask(entity)
 
     fun getAllTasks() = dao.getAllTasks()
+    suspend fun deleteTask(id: String)  = dao.deleteById(id)
 
 }

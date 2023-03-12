@@ -19,7 +19,7 @@ data class TaskEntity(
 
     fun toItem(): TaskItem {
         val date = SimpleDateFormat(
-            "hh:mm", Locale.getDefault()
+            "HH:mm dd.MM.yyyy", Locale.getDefault()
         ).format(Date(timeStamp))
         return TaskItem(name, completed, date, id)
     }

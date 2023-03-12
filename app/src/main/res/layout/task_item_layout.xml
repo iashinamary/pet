@@ -38,6 +38,7 @@
            android:id="@+id/complete_button"
            android:gravity="center"
            android:enabled="true"
+           android:visibility="gone"
            android:layout_marginHorizontal="5dp"
 
            />

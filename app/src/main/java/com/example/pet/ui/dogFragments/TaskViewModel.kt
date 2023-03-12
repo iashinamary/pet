@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.pet.data.TaskRepo
 import com.example.pet.domain.models.TaskEntity
+import com.example.pet.ui.uiModels.TaskItem
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.map
@@ -20,15 +21,21 @@ class TaskViewModel(
         }
     }
 
-    fun addTaskItem(taskText: String){
+    fun addTaskItem(taskText: String, timeToStart: Long){
         viewModelScope.launch {
             val newTask = TaskEntity(
                 taskText,
                 false,
-                System.currentTimeMillis(),
+                timeToStart,
                 UUID.randomUUID().toString()
             )
             taskRepo.addTask(newTask)
+        }
+    }
+
+    fun deleteTask(item: TaskItem) {
+        viewModelScope.launch {
+            taskRepo.deleteTask(item.id)
         }
     }
 }

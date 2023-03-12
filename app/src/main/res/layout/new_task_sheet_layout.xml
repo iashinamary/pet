@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".NewTaskSheet">
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/new_task"
@@ -39,8 +38,18 @@
         android:layout_marginHorizontal="20dp"
         android:text="Сохранить"/>
 
-    <TimePicker
+    <DatePicker
+        android:id="@+id/datapicker"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:calendarViewShown="false"
+        android:datePickerMode="spinner"
         />
+
+    <TimePicker
+        android:id="@+id/time_pick"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:timePickerMode="spinner" />
+
 </LinearLayout>
