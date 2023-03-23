@@ -1,29 +1,20 @@
 package com.example.pet.ui.dogFragments
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
 import android.widget.PopupMenu
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkManager
-import com.example.pet.OneTimeWorkRequest.TaskWorker
 import com.example.pet.R
 import com.example.pet.dase.RecyclerItemsInteractor
 import com.example.pet.ui.adapter.TasksAdapter
 import com.example.pet.databinding.ToDoListLayoutBinding
-import com.example.pet.domain.models.TaskEntity
-import com.example.pet.ui.adapter.TaskViewHolder
 import com.example.pet.ui.uiModels.TaskItem
 import kotlinx.coroutines.flow.collectLatest
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import java.util.concurrent.TimeUnit
 
 class ToDoListFragment : Fragment() {
     private lateinit var binding: ToDoListLayoutBinding
@@ -81,12 +72,6 @@ class ToDoListFragment : Fragment() {
             }
 
         }
-        fun notificate() {
-            val customDelay =
-            val workRequest = OneTimeWorkRequestBuilder<TaskWorker>()
-                .setInitialDelay(customDelay, TimeUnit.SECONDS)
-                .build()
-            WorkManager.getInstance(this.requireContext()).enqueue(workRequest)
-        }
+
     }
 }

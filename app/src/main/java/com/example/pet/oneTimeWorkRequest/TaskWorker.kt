@@ -1,4 +1,4 @@
-package com.example.pet.OneTimeWorkRequest
+package com.example.pet.oneTimeWorkRequest
 
 import android.app.NotificationManager
 import android.content.Context
@@ -21,7 +21,7 @@ class TaskWorker(
 
     private val repository: TaskRepo by inject()
 
-    val notificationManager: NotificationManager =
+    private val notificationManager: NotificationManager =
         context.getSystemService(NotificationManager::class.java)
 
     override suspend fun doWork(): Result {
@@ -30,10 +30,11 @@ class TaskWorker(
                 .setSmallIcon(R.drawable.paw)
                 .build()
             val notificateItem = repository.getTaskToNotificate()
-            notificateItem?.let { tasks ->
+            notificateItem?.let { task ->
                 notificationManager.notify(1, notification.also {
-                    it.tickerText = tasks.name
+                    it.tickerText = task.name
                 })
+                repository.onShow(task.id)
             }
             Result.success()
         } catch (e: Exception){

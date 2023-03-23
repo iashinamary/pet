@@ -18,17 +18,17 @@ interface TasksDao {
 
     @Transaction
     suspend fun select(id: String){
-        removeSelect()
+        onShowNotification(id)
         selectById(id)
         }
 
-    @Query("UPDATE data SET completed = 0")
-    suspend fun removeSelect()
+    @Query("UPDATE tasks SET completed = 1 where id =:id")
+    suspend fun onShowNotification(id: String)
 
-    @Query("UPDATE data SET completed = 1 where id =:id")
+    @Query("UPDATE tasks SET completed = 1 where id =:id")
     suspend fun selectById(id: String)
 
-    @Query("UPDATE data SET completed = 0 WHERE id =:id")
+    @Query("UPDATE tasks SET completed = 0 WHERE id =:id")
     suspend fun unselectById(id: String)
 
     @Query("SELECT * FROM tasks WHERE completed = 0")

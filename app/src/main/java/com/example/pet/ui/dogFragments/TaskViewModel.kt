@@ -1,15 +1,14 @@
 package com.example.pet.ui.dogFragments
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
-import com.example.pet.OneTimeWorkRequest.TaskWorker
+import com.example.pet.oneTimeWorkRequest.TaskWorker
 import com.example.pet.data.TaskRepo
 import com.example.pet.domain.models.TaskEntity
 import com.example.pet.ui.uiModels.TaskItem
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import java.util.*
@@ -17,23 +16,29 @@ import java.util.concurrent.TimeUnit
 
 class TaskViewModel(
     private val taskRepo: TaskRepo,
-): ViewModel() {
+) : ViewModel() {
 
-    val tasksFlow = taskRepo.getAllTasks().map {list->
+    val tasksFlow = taskRepo.getAllTasks().map { list ->
         list.map {
             it.toItem()
         }
     }
 
-    fun addTaskItem(taskText: String, timeToStart: Long){
+    fun addTaskItem(taskText: String, timeToStart: Long, workManager: WorkManager) {
         viewModelScope.launch {
             val newTask = TaskEntity(
                 taskText,
                 false,
                 timeToStart,
-                UUID.randomUUID().toString()
+                UUID.randomUUID().toString(),
+                false
             )
             taskRepo.addTask(newTask)
+            val customDelay =  timeToStart - System.currentTimeMillis()
+            val workRequest = OneTimeWorkRequestBuilder<TaskWorker>()
+                .setInitialDelay(customDelay, TimeUnit.MILLISECONDS)
+                .build()
+            workManager.enqueue(workRequest)
         }
     }
 

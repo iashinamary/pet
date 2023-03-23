@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.work.WorkManager
 import com.example.pet.databinding.NewTaskSheetLayoutBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -38,7 +39,13 @@ class NewTaskSheet : BottomSheetDialogFragment() {
             val customTime = customCalendar.timeInMillis
             if (!binding.name.text.isNullOrEmpty() && System.currentTimeMillis() < customTime) {
                 binding.name.text?.let {
-                    taskvm.addTaskItem(it.toString(), customTime)
+                    taskvm.addTaskItem(
+                        it.toString(),
+                        customTime,
+                        WorkManager.getInstance(
+                            requireContext()
+                        )
+                    )
                     dismiss()
                 }
             } else if(binding.name.text.isNullOrEmpty()) {

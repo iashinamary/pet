@@ -14,7 +14,8 @@ data class TaskEntity(
     @ColumnInfo(name = "time_stamp")
     val timeStamp: Long,
     @PrimaryKey
-    val id: String
+    val id: String,
+    val selected: Boolean
 ) {
 
     fun toItem(): TaskItem {
