@@ -34,16 +34,17 @@ class NewTaskSheet : BottomSheetDialogFragment() {
             val datePicker = binding.datapicker
             val timePickerCompact = binding.timePick
             val customCalendar = Calendar.getInstance()
-            customCalendar.set(datePicker.year, datePicker.month, datePicker.dayOfMonth, timePickerCompact.hour, timePickerCompact.minu te)
+            customCalendar.set(datePicker.year, datePicker.month, datePicker.dayOfMonth, timePickerCompact.hour, timePickerCompact.minute)
             val customTime = customCalendar.timeInMillis
             if (!binding.name.text.isNullOrEmpty() && System.currentTimeMillis() < customTime) {
                 binding.name.text?.let {
-
                     taskvm.addTaskItem(it.toString(), customTime)
                     dismiss()
                 }
-            } else {
+            } else if(binding.name.text.isNullOrEmpty()) {
                Toast.makeText(context, "Введите текст задачи", Toast.LENGTH_LONG).show()
+            } else if(System.currentTimeMillis() > customTime){
+                Toast.makeText(context, "Неправильное врмея", Toast.LENGTH_LONG).show()
             }
         }
     }

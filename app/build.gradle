@@ -52,4 +52,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
     implementation 'io.insert-koin:koin-android:3.3.0'
+
+    //workmanager
+    implementation("androidx.work:work-runtime-ktx:2.8.1")
 }

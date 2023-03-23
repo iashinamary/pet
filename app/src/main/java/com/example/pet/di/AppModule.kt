@@ -4,6 +4,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.pet.data.DataBase
 import com.example.pet.data.TaskRepo
+import com.example.pet.domain.models.TaskEntity
 import com.example.pet.ui.dogFragments.TaskViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -32,4 +33,5 @@ val module = module {
     single {
         TaskRepo(get())
     }
+
 }

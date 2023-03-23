@@ -11,4 +11,10 @@ class TaskRepo(
     fun getAllTasks() = dao.getAllTasks()
     suspend fun deleteTask(id: String)  = dao.deleteById(id)
 
+    suspend fun saveCheck(id: String) = dao.select(id)
+
+    suspend fun getTaskToNotificate() = dao.getTaskstoNotificate()
+
+    suspend fun unselect(id: String) = dao.unselectById(id)
+
 }
