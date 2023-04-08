@@ -1,6 +1,7 @@
 package com.example.pet.data
 
 import com.example.pet.domain.models.TaskEntity
+import com.example.pet.ui.uiModels.TaskItem
 
 class TaskRepo(
     private val dao: TasksDao
@@ -11,12 +12,14 @@ class TaskRepo(
     fun getAllTasks() = dao.getAllTasks()
 
     suspend fun onShow(id: String) = dao.onShowNotification(id)
-    suspend fun deleteTask(id: String)  = dao.deleteById(id)
+    suspend fun deleteTask(id: String) = dao.deleteById(id)
 
     suspend fun saveCheck(id: String) = dao.select(id)
 
     suspend fun getTaskToNotificate() = dao.getTaskstoNotificate()
 
-    suspend fun unselect(id: String) = dao.unselectById(id)
+    suspend fun setUncomplited(id: String) = dao.setUncompleted(id)
+
+    suspend fun update(name: String, timeStamp: Long, id: String) = dao.update(name, timeStamp, id)
 
 }

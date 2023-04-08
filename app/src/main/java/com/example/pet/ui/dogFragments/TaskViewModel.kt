@@ -47,7 +47,7 @@ class TaskViewModel(
             if (!item.completed) {
                 taskRepo.saveCheck(item.id)
             } else {
-                taskRepo.unselect(item.id)
+                taskRepo.setUncomplited(item.id)
             }
         }
     }
@@ -57,6 +57,7 @@ class TaskViewModel(
             taskRepo.deleteTask(item.id)
         }
     }
+
 
 
 }

@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -12,7 +14,9 @@ import com.example.pet.R
 import com.example.pet.dase.RecyclerItemsInteractor
 import com.example.pet.ui.adapter.TasksAdapter
 import com.example.pet.databinding.ToDoListLayoutBinding
+import com.example.pet.domain.models.TaskEntity
 import com.example.pet.ui.uiModels.TaskItem
+import com.example.pet.ui.utils.PermissionUtil
 import kotlinx.coroutines.flow.collectLatest
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
@@ -35,7 +39,7 @@ class ToDoListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        checkPermission()
         binding.apply {
             todoListRecyclerview.adapter = adapter.also {
                 it.bindActions(object : RecyclerItemsInteractor<TaskItem> {
@@ -52,6 +56,9 @@ class ToDoListFragment : Fragment() {
                                 R.id.delete_menu_item ->{
                                     taskvm.deleteTask(item)
                                 }
+                                R.id.edit_menu_item ->{
+                                    taskvm.updateItem(item)
+                                }
                             }
                             popup.dismiss()
                             true
@@ -62,6 +69,7 @@ class ToDoListFragment : Fragment() {
                 })
             }
             newTaskButton.setOnClickListener {
+
                 findNavController().navigate(R.id.action_toDoListFragment_to_newTaskSheet)
             }
 
@@ -73,5 +81,32 @@ class ToDoListFragment : Fragment() {
 
         }
 
+    }
+    private fun checkPermission() {
+        if (!PermissionUtil.hasPermissions(requireContext())) {
+            val resultLauncher =
+                registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                    doOnPermission()
+                }
+            PermissionUtil.registerLauncher(resultLauncher)
+            val oldResultLauncher =
+                registerForActivityResult(ActivityResultContracts.RequestPermission()) { result ->
+                    if (result) {
+                        doOnPermission()
+                    }
+                }
+            PermissionUtil.oldRegisterLauncher(oldResultLauncher)
+            PermissionUtil.requestPermissions(requireActivity())
+        }
+
+    }
+    private fun doOnPermission() {
+        if (PermissionUtil.hasPermissions(requireContext())) {
+            Toast.makeText(
+                requireContext(),
+                "permission",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
     }
 }

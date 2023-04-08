@@ -9,6 +9,7 @@ import java.util.*
 
 @Entity(tableName = "tasks")
 data class TaskEntity(
+    @ColumnInfo(name = "name")
     val name: String,
     val completed: Boolean,
     @ColumnInfo(name = "time_stamp")
