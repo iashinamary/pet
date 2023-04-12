@@ -16,7 +16,7 @@ class TaskRepo(
 
     suspend fun saveCheck(id: String) = dao.select(id)
 
-    suspend fun getTaskToNotificate() = dao.getTaskstoNotificate()
+    suspend fun getTaskToNotificate(id: String) = dao.getTaskstoNotificate(id)
 
     suspend fun setUncomplited(id: String) = dao.setUncompleted(id)
 

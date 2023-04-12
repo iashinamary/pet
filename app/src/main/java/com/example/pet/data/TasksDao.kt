@@ -17,7 +17,7 @@ interface TasksDao {
     @Query("DELETE FROM tasks WHERE id =:id")
     suspend fun deleteById(id: String)
 
-    @Query("UPDATE tasks SET name = :name, timeStamp = :timeStamp  WHERE id =:id")
+    @Query("UPDATE tasks SET name = :name, time_stamp = :timeStamp  WHERE id =:id")
     suspend fun update(name: String, timeStamp: Long, id: String)
 
     @Transaction
@@ -36,8 +36,8 @@ interface TasksDao {
     suspend fun setUncompleted(id: String)
 
 
-    @Query("SELECT * FROM tasks WHERE completed = 0")
-    suspend fun getTaskstoNotificate(): TaskEntity?
+    @Query("SELECT * FROM tasks WHERE completed = 0 AND id =:id")
+    suspend fun getTaskstoNotificate(id: String): TaskEntity?
 
 
 

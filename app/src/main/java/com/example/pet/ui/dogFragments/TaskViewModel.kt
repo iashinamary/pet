@@ -26,16 +26,18 @@ class TaskViewModel(
 
     fun addTaskItem(taskText: String, timeToStart: Long, workManager: WorkManager) {
         viewModelScope.launch {
+            val uuid =  UUID.randomUUID()
             val newTask = TaskEntity(
                 taskText,
                 false,
                 timeToStart,
-                UUID.randomUUID().toString(),
+                uuid.toString(),
                 false
             )
             taskRepo.addTask(newTask)
             val customDelay =  timeToStart - System.currentTimeMillis()
             val workRequest = OneTimeWorkRequestBuilder<TaskWorker>()
+                .setId(uuid)
                 .setInitialDelay(customDelay, TimeUnit.MILLISECONDS)
                 .build()
             workManager.enqueue(workRequest)

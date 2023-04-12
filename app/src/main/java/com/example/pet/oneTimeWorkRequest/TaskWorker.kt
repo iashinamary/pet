@@ -17,7 +17,7 @@ import org.koin.core.component.inject
 
 class TaskWorker(
     context: Context,
-    params: WorkerParameters,
+    private val params: WorkerParameters,
 ): CoroutineWorker(context, params), KoinComponent {
     companion object {
         const val CHANNEL_ID = "channel_id"
@@ -39,9 +39,8 @@ class TaskWorker(
                 .setSmallIcon(R.drawable.paw)
                 .setVibrate(longArrayOf(1000, 1000, 1000, 1000, 1000))
                 .build()
-            val notificateItem = repository.getTaskToNotificate()
-            notificateItem?.let { task ->
-                notificationManager.notify(notificateItem.id.toInt(), notification.also {
+             repository.getTaskToNotificate(params.id.toString())?.let { task ->
+                notificationManager.notify(task.id.toInt(), notification.also {
                     it.tickerText = task.name
                 })
                 repository.onShow(task.id)
